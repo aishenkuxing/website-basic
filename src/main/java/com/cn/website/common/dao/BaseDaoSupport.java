@@ -26,17 +26,13 @@ public interface BaseDaoSupport {
 
 	void update(String entityName, Object object);
 
-
 	Object merge(Object object);
 
-
 	Object merge(String entityName, Object object);
-
 
 	void persist(Object object);
 
 	void persist(String entityName, Object object);
-
 	
 	void delete(Object object);
 
