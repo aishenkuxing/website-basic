@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -19,7 +20,7 @@ import sun.misc.BASE64Encoder;
 /**
  * @author huangjiacheng
  * @version 1.00
- * remark:站点加解密算法
+ * remark:站点加解密算法 包括MD5 DESC AES
  * 
  */
 
@@ -28,6 +29,24 @@ public class Endecrypt {
 	 * 加密串
 	 */
 	private static final String webKey="42Wx8VeG56VUXJmaZTp1XA%3D%3D";
+	
+	/**
+	 * md5加密 返回 md5加密的base64串
+	 * @param str
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
+	public String EncoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        //确定计算方法
+        MessageDigest md5=MessageDigest.getInstance("MD5");
+        BASE64Encoder base64en = new BASE64Encoder();
+        //加密后的字符串
+        String newstr=base64en.encode(md5.digest(str.getBytes("utf-8")));
+        
+        return newstr;
+    }
+	
 	/**
 	 * 进行MD5加密
 	 * 
@@ -39,7 +58,7 @@ public class Endecrypt {
 		byte[] returnByte = null;
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			returnByte = md5.digest(strSrc.getBytes("GBK"));
+			returnByte = md5.digest(strSrc.getBytes("utf-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
