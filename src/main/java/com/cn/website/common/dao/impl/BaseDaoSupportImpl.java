@@ -18,12 +18,16 @@ public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSu
 
 	protected EntityManager entityManager;
 	
+	protected EntityManager centerEntityManager;
+	
 	@Autowired 
     public void setSessionFactoryOverride(SessionFactory sessionFactory)  
     {  
         super.setSessionFactory(sessionFactory);  
         this.entityManager = sessionFactory.createEntityManager();
+        this.centerEntityManager = sessionFactory.createEntityManager();
     }
+
 
 	@Override
 	public <T> T get(Class<T> entityType, Serializable id) {
