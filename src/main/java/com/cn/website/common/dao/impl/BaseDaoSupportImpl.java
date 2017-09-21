@@ -2,12 +2,14 @@ package com.cn.website.common.dao.impl;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 
 import org.hibernate.LockMode;
 import org.hibernate.LockOptions;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -16,17 +18,33 @@ import com.cn.website.common.dao.BaseDaoSupport;
 @Repository("baseDaoSupport")
 public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSupport {
 
+	
+	protected SessionFactory userSessionFactory;
+	
+	protected SessionFactory centerSessionFactory;
+	
 	protected EntityManager entityManager;
 	
 	protected EntityManager centerEntityManager;
 	
 	@Autowired 
-    public void setSessionFactoryOverride(SessionFactory sessionFactory)  
+    @Resource(name = "userSessionFactory") 
+    public void setSessionFactoryOverride(SessionFactory userSessionFactory)  
     {  
-        super.setSessionFactory(sessionFactory);  
-        this.entityManager = sessionFactory.createEntityManager();
-        this.centerEntityManager = sessionFactory.createEntityManager();
+        super.setSessionFactory(userSessionFactory); 
+        this.userSessionFactory = userSessionFactory;
+        this.entityManager = userSessionFactory.createEntityManager();
     }
+	
+	@Autowired 
+	 @Resource(name = "centerSessionFactory") 
+    public void setCenterSessionFactoryOverride(SessionFactory centerSessionFactory)  
+    {  
+		this.centerSessionFactory = centerSessionFactory;
+       // super.setSessionFactory(centerSessionFactory);  
+        this.centerEntityManager = centerSessionFactory.createEntityManager();
+    }
+	
 
 
 	@Override
@@ -109,8 +127,4 @@ public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSu
 	public void delete(String entityName, Object object) {
 		 currentSession().delete(entityName,object);
 	}  
-	
-
-	
-	
 }
