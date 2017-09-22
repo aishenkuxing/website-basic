@@ -10,6 +10,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -17,34 +18,36 @@ import com.cn.website.common.dao.BaseDaoSupport;
 
 @Repository("baseDaoSupport")
 public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSupport {
-
-	
-	protected SessionFactory userSessionFactory;
-	
-	protected SessionFactory centerSessionFactory;
 	
 	protected EntityManager entityManager;
 	
 	protected EntityManager centerEntityManager;
+	
+	protected HibernateDaoSupport hbCenterSupport;  
+	
+	protected HibernateTemplate centerHbernateTemplate;
 	
 	@Autowired 
     @Resource(name = "userSessionFactory") 
     public void setSessionFactoryOverride(SessionFactory userSessionFactory)  
     {  
         super.setSessionFactory(userSessionFactory); 
-        this.userSessionFactory = userSessionFactory;
         this.entityManager = userSessionFactory.createEntityManager();
     }
 	
 	@Autowired 
-	 @Resource(name = "centerSessionFactory") 
+	@Resource(name = "centerSessionFactory") 
     public void setCenterSessionFactoryOverride(SessionFactory centerSessionFactory)  
     {  
-		this.centerSessionFactory = centerSessionFactory;
-       // super.setSessionFactory(centerSessionFactory);  
-        this.centerEntityManager = centerSessionFactory.createEntityManager();
+		hbCenterSupport = new HibernateDaoSupport(){
+			
+		};
+		hbCenterSupport.setSessionFactory(centerSessionFactory);  
     }
 	
+	public HibernateTemplate getCenterHbernateTemplate() {  
+	        return hbCenterSupport.getHibernateTemplate();  
+	}  
 
 
 	@Override
