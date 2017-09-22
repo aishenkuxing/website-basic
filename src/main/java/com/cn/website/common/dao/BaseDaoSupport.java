@@ -17,6 +17,8 @@ public interface BaseDaoSupport {
 	Object load(String entityName, Serializable id, LockMode lockMode);
 	
 	Serializable save(String entityName, Object object);
+	
+	Serializable save(Object object);
 
 	void saveOrUpdate(Object object);
 

@@ -43,10 +43,11 @@ public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSu
 			
 		};
 		hbCenterSupport.setSessionFactory(centerSessionFactory);  
+		this.centerHbernateTemplate = hbCenterSupport.getHibernateTemplate();  
     }
 	
 	public HibernateTemplate getCenterHbernateTemplate() {  
-	        return hbCenterSupport.getHibernateTemplate();  
+		 return hbCenterSupport.getHibernateTemplate();  
 	}  
 
 
@@ -78,6 +79,10 @@ public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSu
 	@Override
 	public Serializable save(String entityName, Object object) {
 		return currentSession().save(entityName,object);
+	}
+	@Override
+	public Serializable save(Object object) {
+		return currentSession().save(object);
 	}
 
 	@Override
