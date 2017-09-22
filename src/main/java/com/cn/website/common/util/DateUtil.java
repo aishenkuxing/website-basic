@@ -55,4 +55,8 @@ public class DateUtil {
 
         return outDate;
     }
+    
+    public static Date getCurrentDate(){
+    	return new Date();
+    }
 }
