@@ -27,13 +27,17 @@ public class BaseDaoSupportImpl extends HibernateDaoSupport implements BaseDaoSu
 	
 	protected HibernateTemplate centerHbernateTemplate;
 	
+	protected HibernateTemplate userHbernateTemplate;
+	
 	@Autowired 
     @Resource(name = "userSessionFactory") 
     public void setSessionFactoryOverride(SessionFactory userSessionFactory)  
     {  
         super.setSessionFactory(userSessionFactory); 
         this.entityManager = userSessionFactory.createEntityManager();
+        this.userHbernateTemplate = new HibernateTemplate(userSessionFactory);
     }
+	
 	
 	@Autowired 
 	@Resource(name = "centerSessionFactory") 
