@@ -1,4 +1,4 @@
-package com.cn.website.common.component;
+package com.cn.website.common.component.util;
 
 import java.io.IOException;
 import java.util.Map;

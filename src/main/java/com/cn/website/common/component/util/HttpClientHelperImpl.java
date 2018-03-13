@@ -7,7 +7,7 @@
  * =============================================================
  */
 
-package com.cn.website.common.component;
+package com.cn.website.common.component.util;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author ZhengChen
+ * @author 黄家成
  * @since 0.1.0
  */
 @Component
